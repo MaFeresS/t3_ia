@@ -1,6 +1,3 @@
-#ask on how to load data, maybe its the val file
-#ask about preprossesing
-
 import torch
 from torchvision import transforms, models
 import numpy as np
@@ -9,7 +6,7 @@ import os
 
 data_dir = 'VocPascal/'
 image_dir = os.path.join(data_dir, 'JPEGImages/JPEGImages')
-list_of_images = os.path.join(data_dir, 'val_voc.txt')   #change for train_voc or val_voc
+list_of_images = os.path.join(data_dir, 'val_voc.txt')
 if __name__ == '__main__':
     #reading data
     with open(list_of_images, "r+") as file: 
@@ -21,7 +18,7 @@ if __name__ == '__main__':
 
     # defining the image preprocessing
     preprocess = transforms.Compose([
-        transforms.Resize((224, 224)),  #change? numbers on txt matter?
+        transforms.Resize((224, 224)),
         transforms.ToTensor(),
         transforms.Normalize(
             mean=[0.485, 0.456, 0.406], 
@@ -30,8 +27,7 @@ if __name__ == '__main__':
     #load de model     
     model = torch.hub.load('facebookresearch/dinov2', 'dinov2_vits14').to(device)
 
-    dim=384    #ok?
-    #Pasamos la imagen por el modelo
+    dim=384
     with torch.no_grad():        
         n_images = len(files)
         features = np.zeros((n_images, dim), dtype = np.float32)        
